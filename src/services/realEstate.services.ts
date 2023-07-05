@@ -6,7 +6,7 @@ import { IRealEstatePublic, IRealEstateRegister } from "../interfaces/realEstate
 import { realEstateDataPublicSchema } from "../schemas/realEstate.schemas";
 import { addressDataPublicSchema } from "../schemas/address.schemas";
 
-const createPropriety: TService<IRealEstatePublic, IRealEstateRegister> = async (payload) => {
+const requestCreatePropriety: TService<IRealEstatePublic, IRealEstateRegister> = async (payload) => {
   const { address: addressService } = payload;
   const addressRepo: Repository<Address> = AppDataSource.getRepository(Address);
   const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate);
@@ -23,7 +23,7 @@ const createPropriety: TService<IRealEstatePublic, IRealEstateRegister> = async 
   const addressExists = await addressRepo
     .createQueryBuilder("address")
     .where("address.street = :street", { street: addressPropriety.street })
-    .andWhere("address.number =:number", { number: addressPropriety.number })
+    .andWhere("address.number = :number", { number: addressPropriety.number })
     .getOne();
 
   if (addressExists) throw new AppError("Address already exists", 409);
@@ -44,11 +44,11 @@ const createPropriety: TService<IRealEstatePublic, IRealEstateRegister> = async 
   return realEstateDataPublicSchema.parse(proprietyInfo);
 };
 
-const proprietyList = async (): Promise<RealEstate[]> => {
+const requestProprietyList = async (): Promise<RealEstate[]> => {
   const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate);
   const propriety = await realEstateRepo.createQueryBuilder("propriety").leftJoinAndSelect("proriety.address", "address").getMany();
 
   return propriety;
 };
 
-export { createPropriety, proprietyList };
+export { requestCreatePropriety, requestProprietyList };

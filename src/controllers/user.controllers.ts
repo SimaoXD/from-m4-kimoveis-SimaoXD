@@ -39,4 +39,4 @@ const sessioLogUser: TController = async (req, res) => {
   return res.status(200).json({ token });
 };
 
-export default { createUser, getUserList, updateUser, deleteUser, sessioLogUser };
+export { createUser, getUserList, updateUser, deleteUser, sessioLogUser };

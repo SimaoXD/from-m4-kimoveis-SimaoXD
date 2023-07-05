@@ -60,7 +60,7 @@ const requestCreateSchedule = async (payload: IScheduleRegister, userId: number)
   return { message: "Schedule created" };
 };
 
-const prorietyListSchedule: TService<RealEstate, number> = async (payload) => {
+const requestProrietyListSchedule: TService<RealEstate, number> = async (payload) => {
   const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate);
 
   const realEstate = await realEstateRepo
@@ -77,4 +77,4 @@ const prorietyListSchedule: TService<RealEstate, number> = async (payload) => {
   return realEstate;
 };
 
-export { requestCreateSchedule, prorietyListSchedule };
+export { requestCreateSchedule, requestProrietyListSchedule };
