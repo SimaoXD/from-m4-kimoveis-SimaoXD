@@ -1,3 +1,6 @@
+import { ICategoryPublic, ICategoryPublic } from "../interfaces/category.interfaces";
+import { TController } from "../interfaces/login.interfaces";
+
 const createCategory: TController = async (request, response) => {
   const payload = (ICategoryPublic = response.locals.data);
   const category = await requestCreate(payload);

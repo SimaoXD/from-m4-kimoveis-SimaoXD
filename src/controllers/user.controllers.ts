@@ -1,3 +1,6 @@
+import { TController } from "../interfaces/login.interfaces";
+import { IUserRegister } from "../interfaces/users.interfaces";
+
 const createUser: TController = async (req, res) => {
   const payload = (IUserRegister = res.locals.data);
   const user = await requestAnimationFrame.CreateUser(payload);
