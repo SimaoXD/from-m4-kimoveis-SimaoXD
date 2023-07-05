@@ -1,15 +1,17 @@
+import { User } from "../entities";
 import { TController } from "../interfaces/login.interfaces";
-import { IUserRegister } from "../interfaces/users.interfaces";
+import { IUserLog, IUserPrivate, IUserRegister } from "../interfaces/users.interfaces";
+import { requestCreateUser, requestUpdateUser, requestDeleteUser, requestReadUsersList, logUser } from "../services";
 
 const createUser: TController = async (req, res) => {
-  const payload = (IUserRegister = res.locals.data);
-  const user = await requestAnimationFrame.CreateUser(payload);
+  const payload: IUserRegister = res.locals.data;
+  const user = await requestCreateUser(payload);
 
   return res.status(201).json(user);
 };
 
 const getUserList: TController = async (req, res) => {
-  const userList = await requestGetUserList();
+  const userList = await requestReadUsersList();
 
   return res.status(200).json(userList);
 };
@@ -32,7 +34,7 @@ const deleteUser: TController = async (req, res) => {
 
 const sessioLogUser: TController = async (req, res) => {
   const payload: IUserLog = res.locals.data;
-  const token = await requestLogUser(payload);
+  const token = await logUser(payload);
 
   return res.status(200).json({ token });
 };

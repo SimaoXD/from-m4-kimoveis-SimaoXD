@@ -1,21 +1,21 @@
-import { ICategoryPublic, ICategoryPublic } from "../interfaces/category.interfaces";
-import { TController } from "../interfaces/login.interfaces";
+import { ProprietyListCategory, categoriesList, createCategorie } from "../services/categories.services";
+import { ICategoryPublic, TController } from "../interfaces";
 
-const createCategory: TController = async (request, response) => {
-  const payload = (ICategoryPublic = response.locals.data);
-  const category = await requestCreate(payload);
+const createCategory: TController = async (req, res) => {
+  const payload: ICategoryPublic = res.locals.data;
+  const category = await createCategorie(payload);
 
-  return response.status(201).json(category);
+  return res.status(201).json(category);
 };
 
 const getListCategory: TController = async (req, res) => {
-  const listCategory: ICategoryPublic[] = await requestCategoriesList();
+  const listCategory: ICategoryPublic[] = await categoriesList();
 
   return res.status(200).json(listCategory);
 };
 
 const getProprietyListCategory: TController = async (req, res) => {
-  const proprietyList = await requestProprietyListCategory(req);
+  const proprietyList = await ProprietyListCategory(req);
 
   return res.status(200).json(proprietyList);
 };

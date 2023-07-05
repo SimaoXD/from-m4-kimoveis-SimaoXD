@@ -1,3 +1,7 @@
+import { TController, IScheduleRegister } from "../interfaces";
+import { scheduleDataRegisterSchema } from "../schemas";
+import { prorietyListSchedule, requestCreateSchedule } from "../services";
+
 const createSchedule: TController = async (req, res) => {
   const payload: IScheduleRegister = res.locals.data;
   const userId = Number(res.locals.userId);
@@ -8,7 +12,7 @@ const createSchedule: TController = async (req, res) => {
 
 const getProprietyListSchedule: TController = async (req, res) => {
   const payload = Number(req.params.id);
-  const scheduleList = await requestGetProprietySchedule(payload);
+  const scheduleList = await prorietyListSchedule(payload);
 
   return res.status(200).json(scheduleList);
 };

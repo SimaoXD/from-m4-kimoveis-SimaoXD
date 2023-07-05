@@ -6,6 +6,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities";
 import { TService } from "../interfaces/login.interfaces";
 import { IUserLog } from "../interfaces/users.interfaces";
+import AppError from "../errors/AppError";
 
 const logUser: TService<string, IUserLog> = async (payload) => {
   const { email, password } = payload;

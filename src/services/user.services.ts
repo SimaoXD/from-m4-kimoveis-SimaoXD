@@ -1,12 +1,11 @@
-import { AppDataSource } from "../data-source";
-import * as crypt from "bcryptjs";
 import { Repository } from "typeorm";
+import crypt from "bcryptjs";
+import { AppDataSource } from "../data-source";
 import { User } from "../entities";
-import { TService } from "../interfaces/login.interfaces";
-import { userDataPublicSchema, userListPublicSchema } from "../schemas/user.schemas";
-import { IUserPrivate, IUserPublic, IUserRegister } from "../interfaces/users.interfaces";
+import { TService, IUserPublic, IUserRegister, IUserPrivate } from "../interfaces";
+import { userDataPublicSchema, userListPublicSchema } from "../schemas";
 
-const createUser: TService<IUserPublic, IUserRegister> = async (payload) => {
+const requestCreateUser: TService<IUserPublic, IUserRegister> = async (payload) => {
   const { password } = payload;
 
   const passHash = crypt.hashSync(password, 12);
@@ -20,14 +19,14 @@ const createUser: TService<IUserPublic, IUserRegister> = async (payload) => {
   return userDataPublicSchema.parse(user);
 };
 
-const readUsersList = async (): Promise<IUserPublic[]> => {
+const requestReadUsersList = async (): Promise<IUserPublic[]> => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
   const usersList = await userRepo.find();
 
   return userListPublicSchema.parse(usersList);
 };
 
-const updateUser = async (payload: IUserPrivate, userFound: User): Promise<IUserPublic> => {
+const requestUpdateUser = async (payload: IUserPrivate, userFound: User): Promise<IUserPublic> => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
   const userData = { ...userFound, ...payload } as User;
   const user = userRepo.create(userData);
@@ -37,9 +36,9 @@ const updateUser = async (payload: IUserPrivate, userFound: User): Promise<IUser
   return userDataPublicSchema.parse(user);
 };
 
-const deleteUser: TService<void, number> = async (payload) => {
+const requestDeleteUser: TService<void, number> = async (payload) => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
   await userRepo.createQueryBuilder("user").softDelete().where("id = :id", { id: payload }).execute();
 };
 
-export { createUser, readUsersList, updateUser, deleteUser };
+export { requestCreateUser, requestReadUsersList, requestUpdateUser, requestDeleteUser };

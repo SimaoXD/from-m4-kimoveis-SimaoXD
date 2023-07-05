@@ -3,8 +3,9 @@ import { AppDataSource } from "../data-source";
 import { User, RealEstate, Schedule } from "../entities";
 import { IScheduleRegister } from "../interfaces/schedules.interfaces";
 import { TService } from "../interfaces/login.interfaces";
+import AppError from "../errors/AppError";
 
-const createSchedule = async (payload: IScheduleRegister, userId: number): Promise<{ message: string }> => {
+const requestCreateSchedule = async (payload: IScheduleRegister, userId: number): Promise<{ message: string }> => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
   const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate);
   const scheduleRepo: Repository<Schedule>;
@@ -76,4 +77,4 @@ const prorietyListSchedule: TService<RealEstate, number> = async (payload) => {
   return realEstate;
 };
 
-export { createSchedule, prorietyListSchedule };
+export { requestCreateSchedule, prorietyListSchedule };
