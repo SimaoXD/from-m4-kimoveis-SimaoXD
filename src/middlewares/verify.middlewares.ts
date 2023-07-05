@@ -1,5 +1,4 @@
 import "dotenv/config";
-
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Category, User } from "../entities";
@@ -23,7 +22,7 @@ const verifyEmailExists: TMiddleware<void> = async (req, res, next) => {
 const verifyUserExists: TMiddleware<void> = async (req, res, next) => {
   const id = Number(req.params.id);
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
-  const user = await userRepo.findOne({ id });
+  const user = await userRepo.findOneBy({ id });
 
   if (!user) throw new AppError("User not found", 404);
 

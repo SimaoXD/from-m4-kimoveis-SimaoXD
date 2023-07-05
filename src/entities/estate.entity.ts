@@ -12,7 +12,6 @@ import {
 import Schedule from "./schedule.entity";
 import Address from "./address.entity";
 import Category from "./category.entity";
-import categoriesControllers from "../controllers/categories.controllers";
 
 @Entity("real_estate")
 class RealEstate {

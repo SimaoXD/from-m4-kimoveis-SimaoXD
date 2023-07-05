@@ -3,7 +3,7 @@ import AppError from "../errors/AppError";
 import { TMiddleware } from "../interfaces/login.interfaces";
 
 const verifyTokenUser: TMiddleware<void> = async (req, res, next) => {
-  const auth = req.headres.authorization;
+  const auth = req.headers.authorization;
 
   if (!auth) throw new AppError("Missing bearer token", 401);
 

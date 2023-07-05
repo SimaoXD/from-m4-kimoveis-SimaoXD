@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import RealEstate from "./estate.entity";
 
 @Entity("CategoriesService")
 class Category {
@@ -8,7 +9,7 @@ class Category {
   @Column({ type: "varchar", length: 45, unique: true })
   name: string;
 
-  @OneToMany(() => realEstateControllers, (realEstate) => realEstate.category)
+  @OneToMany(() => RealEstate, (realEstate) => realEstate.category)
   realEstate: RealEstate[];
 }
 

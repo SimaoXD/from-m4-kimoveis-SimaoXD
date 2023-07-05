@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import User from "./user.entity";
+import RealEstate from "./estate.entity";
 
 @Entity("schedules")
 class Schedule {
