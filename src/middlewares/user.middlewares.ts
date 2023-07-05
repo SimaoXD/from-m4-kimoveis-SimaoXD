@@ -1,5 +1,7 @@
 import { AppDataSource } from "../data-source";
+import * as jwt from "jsonwebtoken";
 import { User } from "../entities";
+import AppError from "../errors/AppError";
 import { TMiddleware } from "../interfaces/login.interfaces";
 
 const verifyEmailExists: TMiddleware<void> = async (req, res, next) => {

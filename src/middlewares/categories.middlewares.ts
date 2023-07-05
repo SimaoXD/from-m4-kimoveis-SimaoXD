@@ -1,5 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { Category } from "../entities";
+import AppError from "../errors/AppError";
 import { TMiddleware } from "../interfaces/login.interfaces";
 
 const verifyCategoryExists: TMiddleware<void> = async (req, res, next) => {

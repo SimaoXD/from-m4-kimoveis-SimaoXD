@@ -1,11 +1,12 @@
 import "dotenv/config";
-import * as jwt from "jsonwebtoken";
+
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Category, User } from "../entities";
 import { TMiddleware } from "../interfaces/login.interfaces";
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
+import AppError from "../errors/AppError";
 
 const verifyEmailExists: TMiddleware<void> = async (req, res, next) => {
   const { email } = req.body;

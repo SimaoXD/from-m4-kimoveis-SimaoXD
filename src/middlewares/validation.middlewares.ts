@@ -1,3 +1,5 @@
+import * as jwt from "jsonwebtoken";
+import AppError from "../errors/AppError";
 import { TMiddleware } from "../interfaces/login.interfaces";
 
 const verifyTokenUser: TMiddleware<void> = async (req, res, next) => {
