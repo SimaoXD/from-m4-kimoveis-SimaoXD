@@ -5,14 +5,13 @@ import { TService } from "../interfaces/login.interfaces";
 import { IRealEstatePublic, IRealEstateRegister } from "../interfaces/realEstate.interfaces";
 import { realEstateDataPublicSchema } from "../schemas/realEstate.schemas";
 import { addressDataPublicSchema } from "../schemas/address.schemas";
+import AppError from "../errors/AppError";
 
 const requestCreatePropriety: TService<IRealEstatePublic, IRealEstateRegister> = async (payload) => {
-  const { address: addressService } = payload;
+  const { address: addressPropriety } = payload;
   const addressRepo: Repository<Address> = AppDataSource.getRepository(Address);
   const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate);
-
   const categoryRepo: Repository<Category> = AppDataSource.getRepository(Category);
-
   const address = addressRepo.create(addressPropriety);
   const category = await categoryRepo.findOneBy({
     id: payload.categoryId,

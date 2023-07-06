@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -13,21 +12,6 @@ import * as crypt from "bcryptjs";
 
 @Entity("users")
 class User {
-  @BeforeInsert()
-  @BeforeUpdate()
-  verifyPass() {
-    const verifyPassHash = crypt.getRounds(this.password);
-
-    if (!verifyPassHash) {
-      this.password = crypt.hashSync(this.password, 12);
-    }
-  }
-
-  @BeforeUpdate()
-  hashPassUser() {
-    this.password = crypt.hashSync(this.password, 12);
-  }
-
   @PrimaryGeneratedColumn("increment")
   id: number;
 
@@ -40,17 +24,27 @@ class User {
   @Column({ type: "boolean", default: false })
   admin: boolean;
 
-  @Column({ type: "varchar", length: 20 })
+  @Column({ type: "varchar", length: 120 })
   password: string;
 
   @CreateDateColumn({ type: "date" })
-  CreateAt: string;
+  createdAt: string;
 
   @UpdateDateColumn({ type: "date" })
-  updateAt: string;
+  updatedAt: string;
 
   @DeleteDateColumn({ type: "date", nullable: true })
-  deleteAt: string | null | undefined;
+  deletedAt: string | null | undefined;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  verifyPass() {
+    const verifyPassHash = crypt.getRounds(this.password);
+
+    if (!verifyPassHash) {
+      this.password = crypt.hashSync(this.password, 12);
+    }
+  }
 }
 
 export default User;

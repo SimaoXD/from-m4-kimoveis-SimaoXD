@@ -25,9 +25,9 @@ const userDataPrivateSchema = userDataRegisterSchema
   })
   .partial();
 
-const userDataLogSchema = userDataRegisterSchema.pick({
-  email: true,
-  password: true,
+const userDataLogSchema = z.object({
+  email: z.string().email().max(45),
+  password: z.string().max(120),
 });
 
 export { userDataPublicSchema, userListPublicSchema, userDataRegisterSchema, userDataPrivateSchema, userDataLogSchema };

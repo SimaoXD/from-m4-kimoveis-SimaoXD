@@ -6,9 +6,11 @@ import { TMiddleware } from "../interfaces/login.interfaces";
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
 import AppError from "../errors/AppError";
+import * as jwt from "jsonwebtoken";
 
 const verifyEmailExists: TMiddleware<void> = async (req, res, next) => {
   const { email } = req.body;
+
   if (!email) return next();
 
   const userRepo: Repository<User> = AppDataSource.getRepository(User);

@@ -8,8 +8,7 @@ import AppError from "../errors/AppError";
 const requestCreateSchedule = async (payload: IScheduleRegister, userId: number): Promise<{ message: string }> => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
   const realEstateRepo: Repository<RealEstate> = AppDataSource.getRepository(RealEstate);
-  const scheduleRepo: Repository<Schedule>;
-  AppDataSource.getRepository(Schedule);
+  const scheduleRepo: Repository<Schedule> = AppDataSource.getRepository(Schedule);
 
   const timeReserved: string = payload.hour.split(":")[0];
 
@@ -47,7 +46,7 @@ const requestCreateSchedule = async (payload: IScheduleRegister, userId: number)
     .andWhere("schedule.user = :userId", { userId })
     .getOne();
 
-  if (schedulesUser) throw new AppError("User schedule to this real estate at this time already exists", 409);
+  if (shedulesuser) throw new AppError("User schedule to this real estate at this time already exists", 409);
 
   const schedule = scheduleRepo.create({
     ...payload,
