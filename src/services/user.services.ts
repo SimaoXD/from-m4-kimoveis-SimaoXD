@@ -5,43 +5,32 @@ import { TService, IUserPublic, IUserRegister, IUserPrivate } from "../interface
 import { userDataPublicSchema, userListPublicSchema } from "../schemas";
 import { AppDataSource } from "../data-source";
 
-const requestCreateUser: TService<IUserPublic, IUserRegister> = async (payload) => {
-  const { password } = payload;
-  const passHash = crypt.hashSync(password, 12);
-  const dataUser = { ...payload, password: passHash };
+// const requestCreateUser: TService<IUserPublic, IUserRegister> = async (payload) => {
+//   const { password } = payload;
+//   const passHash = crypt.hashSync(password, 12);
+//   const dataUser = { ...payload, password: passHash };
 
-  const userRepo: Repository<User> = AppDataSource.getRepository(User);
-  const user = userRepo.create(dataUser);
+//   const userRepo: Repository<User> = AppDataSource.getRepository(User);
+//   const user = userRepo.create(dataUser);
 
-  await userRepo.save(user);
+//   console.log(dataUser);
+//   await userRepo.save(user);
 
-  return userDataPublicSchema.parse(user);
+//   return userDataPublicSchema.parse(user);
+// };
+
+const requestCreateUser = async (payload: IUserRegister): Promise<IUserPublic> => {
+  const userRepository: Repository<User> = AppDataSource.getRepository(User);
+
+  const user: User = userRepository.create({ ...payload });
+
+  const save = await userRepository.save(user);
+
+  const userResponse: IUserPublic = userDataPublicSchema.parse(user);
+  console.log(userDataPublicSchema.parse(user));
+
+  return userResponse;
 };
-
-// const requestCreateUser = async (payload: IUserPublic): Promise<IUserRegister> => {
-//   const userRepository: Repository<User> = AppDataSource.getRepository(User);
-
-//   const user: User = userRepository.create(payload);
-
-//   await userRepository.save(user);
-
-//   const userResponse: IUserPublic = userDataPublicSchema.parse(user);
-
-//   return userResponse;
-// };
-
-// const requestCreateUser = async (payload: IUserRegister): Promise<IUserPublic> => {
-//   const userRepository: Repository<User> = AppDataSource.getRepository(User);
-
-//   const user: User = userRepository.create({ ...payload });
-
-//   const save = await userRepository.save(user);
-
-//   const userResponse: IUserPublic = userDataPublicSchema.parse(user);
-//   console.log(user);
-
-//   return userResponse;
-// };
 
 const requestReadUsersList = async (): Promise<IUserPublic[]> => {
   const userRepo: Repository<User> = AppDataSource.getRepository(User);

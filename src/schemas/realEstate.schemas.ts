@@ -5,8 +5,8 @@ const realEstateDataPublicSchema = z.object({
   sold: z.boolean(),
   value: z.number().positive().or(z.string()),
   size: z.number().int().positive(),
-  createAt: z.string(),
-  updateAt: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
   address: z.object({
     id: z.string(),
     street: z.string().max(45),
@@ -41,8 +41,8 @@ const realEstateDataPrivateSchema = realEstateDataPublicSchema
 
   .omit({
     id: true,
-    createAt: true,
-    updateAt: true,
+    createdAt: true,
+    updatedAt: true,
     sold: true,
   })
   .partial();

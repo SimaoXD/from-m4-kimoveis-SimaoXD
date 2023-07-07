@@ -5,14 +5,15 @@ const userDataPublicSchema = z.object({
   name: z.string().max(45),
   email: z.string().email().max(45),
   admin: z.boolean().default(false),
-  createAt: z.string(),
-  updateAt: z.string(),
-  deleteAt: z.string().nullish(),
+
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  deletedAt: z.string().nullish(),
 });
 
 const userListPublicSchema = userDataPublicSchema.extend({}).array();
 
-const userDataRegisterSchema = userDataPublicSchema.omit({ id: true, createAt: true, updateAt: true, deleteAt: true }).extend({
+const userDataRegisterSchema = userDataPublicSchema.omit({ id: true, createdAt: true, updatedAt: true, deletedAt: true }).extend({
   password: z.string().max(120),
 });
 
