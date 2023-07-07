@@ -14,7 +14,7 @@ const logUser = async (payload: IUserLog): Promise<String> => {
 
   if (!user) throw new AppError("Invalid credentials", 401);
 
-  const verifyPass = crypt.compareSync(password!, user.password);
+  const verifyPass = crypt.compareSync(password, user.password);
 
   if (!verifyPass) throw new AppError("Invalid credentials", 401);
 

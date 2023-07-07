@@ -1,8 +1,9 @@
+import { Request, Response } from "express";
 import { TController, IScheduleRegister } from "../interfaces";
 import { scheduleDataRegisterSchema } from "../schemas";
 import { requestProrietyListSchedule, requestCreateSchedule } from "../services";
 
-const createSchedule: TController = async (req, res) => {
+const createSchedule = async (req: Request, res: Response): Promise<Response> => {
   const payload: IScheduleRegister = res.locals.data;
   const userId = Number(res.locals.userId);
   const schedule = await requestCreateSchedule(payload, userId);
@@ -10,7 +11,7 @@ const createSchedule: TController = async (req, res) => {
   return res.status(201).json(schedule);
 };
 
-const getProprietyListSchedule: TController = async (req, res) => {
+const getProprietyListSchedule = async (req: Request, res: Response): Promise<Response> => {
   const payload = Number(req.params.id);
   const scheduleList = await requestProrietyListSchedule(payload);
 

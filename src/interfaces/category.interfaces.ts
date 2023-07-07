@@ -3,5 +3,4 @@ import { categoryDataPublicSchema, categoryDataRegisterSchema } from "../schemas
 
 interface ICategoryPublic extends z.infer<typeof categoryDataPublicSchema> {}
 interface ICategoryRegister extends z.infer<typeof categoryDataRegisterSchema> {}
-
 export { ICategoryPublic, ICategoryRegister };

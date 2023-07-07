@@ -1,20 +1,21 @@
+import { Request, Response } from "express";
 import { requestCreateCategorie, requestCategoriesList, requestProprietyListCategory } from "../services";
-import { ICategoryPublic, TController } from "../interfaces";
+import { ICategoryPublic } from "../interfaces";
 
-const createCategory: TController = async (req, res) => {
+const createCategory = async (req: Request, res: Response): Promise<Response> => {
   const payload: ICategoryPublic = res.locals.data;
   const category = await requestCreateCategorie(payload);
 
   return res.status(201).json(category);
 };
 
-const getListCategory: TController = async (req, res) => {
+const getListCategory = async (req: Request, res: Response): Promise<Response> => {
   const listCategory: ICategoryPublic[] = await requestCategoriesList();
 
   return res.status(200).json(listCategory);
 };
 
-const getProprietyListCategory: TController = async (req, res) => {
+const getProprietyListCategory = async (req: Request, res: Response): Promise<Response> => {
   const proprietyList = await requestProprietyListCategory(req);
 
   return res.status(200).json(proprietyList);

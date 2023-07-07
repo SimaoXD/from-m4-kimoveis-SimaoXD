@@ -12,12 +12,9 @@ const userDataPublicSchema = z.object({
 
 const userListPublicSchema = userDataPublicSchema.extend({}).array();
 
-const userDataRegisterSchema = userDataPublicSchema
-  .omit({ id: true, createAt: true, updateAt: true, deleteAt: true })
-  .extend({
-    password: z.string().max(120),
-  })
-  .partial();
+const userDataRegisterSchema = userDataPublicSchema.omit({ id: true, createAt: true, updateAt: true, deleteAt: true }).extend({
+  password: z.string().max(120),
+});
 
 const userDataPrivateSchema = userDataRegisterSchema
   .omit({
@@ -29,5 +26,10 @@ const userDataLogSchema = z.object({
   email: z.string().email().max(45),
   password: z.string().max(120),
 });
+
+// const userDataLogSchema = userDataRegisterSchema.pick({
+//   email: true,
+//   password: true,
+// });
 
 export { userDataPublicSchema, userListPublicSchema, userDataRegisterSchema, userDataPrivateSchema, userDataLogSchema };

@@ -1,7 +1,7 @@
 import { createCategory, getListCategory, getProprietyListCategory } from "./categories.controllers";
 import { createProperty, getProprietyList } from "./realEstate.controllers";
 import { createSchedule, getProprietyListSchedule } from "./schedule.categories";
-import { createUser, getUserList, updateUser, deleteUser, sessioLogUser } from "./user.controllers";
+import { createUser, getUserList, updateUser, deleteUser, sessionLogUser } from "./user.controllers";
 
 export {
   createCategory,
@@ -15,5 +15,5 @@ export {
   getUserList,
   updateUser,
   deleteUser,
-  sessioLogUser,
+  sessionLogUser,
 };

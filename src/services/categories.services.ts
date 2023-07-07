@@ -3,28 +3,21 @@ import { Request } from "express";
 import { ICategoryPublic, ICategoryRegister } from "../interfaces/category.interfaces";
 import { Category } from "../entities";
 import { AppDataSource } from "../data-source";
-import { TService } from "../interfaces/login.interfaces";
 import { categoryDataPublicSchema } from "../schemas/categories.schemas";
 import AppError from "../errors/AppError";
 
-const requestCreateCategorie: TService<ICategoryPublic, ICategoryRegister> = async (payload) => {
+const requestCreateCategorie = async (payload: ICategoryRegister): Promise<ICategoryPublic> => {
   const categoryRepo: Repository<Category> = AppDataSource.getRepository(Category);
-
-  const categorie = categoryRepo.create(payload);
-
-  await categoryRepo.save(categorie);
-
-  return categoryDataPublicSchema.parse(categorie);
+  const category = await categoryRepo.save(payload);
+  return categoryDataPublicSchema.parse(category);
 };
 
 const requestCategoriesList = async (): Promise<ICategoryPublic[]> => {
   const categoryRepo: Repository<Category> = AppDataSource.getRepository(Category);
-  const category = await categoryRepo.find();
-
-  return category;
+  const categories = await categoryRepo.find();
+  return categories;
 };
-
-const requestProprietyListCategory: TService<Category, Request> = async (payload) => {
+const requestProprietyListCategory = async (payload: Request): Promise<Category> => {
   const id = Number(payload.params.id);
   const realEstateRepo: Repository<Category> = AppDataSource.getRepository(Category);
 

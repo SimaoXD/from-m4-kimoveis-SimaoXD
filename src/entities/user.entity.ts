@@ -45,6 +45,11 @@ class User {
       this.password = crypt.hashSync(this.password, 12);
     }
   }
+
+  @BeforeUpdate()
+  hashPassUser() {
+    this.password = crypt.hashSync(this.password, 12);
+  }
 }
 
 export default User;
