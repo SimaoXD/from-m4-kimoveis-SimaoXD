@@ -18,6 +18,9 @@ const settings = (): DataSourceOptions => {
   return {
     type: "postgres",
     url: dbUrl,
+    // username: "ValorizeImob",
+    // password: "12345",
+    // database: "imoveis",
     synchronize: false,
     logging: true,
     entities: [entitiesPath],

@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { verifyCategoryExists } from "../middlewares/categories.middlewares";
-import { verifyTokenUser, verifyUserAdmin } from "../middlewares/user.middlewares";
-import { verifyDataBody } from "../middlewares/verify.middlewares";
+
+import { verifyCategoryExists, verifyDataBody } from "../middlewares/verify.middlewares";
 import { categoryDataRegisterSchema } from "../schemas";
 import { createCategory, getListCategory, getProprietyList } from "../controllers";
+import { verifyTokenUser, verifyUserAdmin } from "../middlewares/validation.middlewares";
 
 const categorieRouter = Router();
 
 categorieRouter.post(
   "",
-  verifyCategoryExists,
+  verifyDataBody(categoryDataRegisterSchema),
   verifyTokenUser,
   verifyUserAdmin,
-  verifyDataBody(categoryDataRegisterSchema),
+  verifyCategoryExists,
   createCategory
 );
 categorieRouter.get("", getListCategory);

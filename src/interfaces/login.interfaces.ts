@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from "express";
 
 interface ITokenInfo {
   admin: boolean;
-  sub: string;
+  subject: string;
   iat: number;
 }
 

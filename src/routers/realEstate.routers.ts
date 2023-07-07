@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { verifyTokenUser, verifyUserAdmin } from "../middlewares/user.middlewares";
 import { verifyDataBody } from "../middlewares/verify.middlewares";
 import { realEstateDataRegisterSchema } from "../schemas";
 import { createProperty, getProprietyList } from "../controllers";
+import { verifyTokenUser, verifyUserAdmin } from "../middlewares/validation.middlewares";
 
 const proprietyRouter = Router();
 

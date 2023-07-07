@@ -2,7 +2,7 @@ import { Router } from "express";
 import { verifyDataBody, verifyEmailExists, verifyUserExists } from "../middlewares/verify.middlewares";
 import { userDataPrivateSchema, userDataRegisterSchema } from "../schemas";
 import { createUser, deleteUser, getUserList, updateUser } from "../controllers";
-import { verifyTokenUser, verifyUserAdmin } from "../middlewares/user.middlewares";
+import { verifyTokenUser, verifyUserAdmin } from "../middlewares/validation.middlewares";
 
 const userRouter = Router();
 

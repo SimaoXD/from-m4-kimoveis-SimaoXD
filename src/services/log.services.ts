@@ -1,6 +1,6 @@
+import "dotenv/config";
 import * as crypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
-import "dotenv/config";
 import { Repository } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";

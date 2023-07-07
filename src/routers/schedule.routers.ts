@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { verifyTokenUser, verifyUserAdmin } from "../middlewares/user.middlewares";
+
 import { verifyDataBody } from "../middlewares/verify.middlewares";
 import { scheduleDataRegisterSchema } from "../schemas";
 import { createSchedule, getProprietyListSchedule } from "../controllers";
+import { verifyTokenUser, verifyUserAdmin } from "../middlewares/validation.middlewares";
 
 const scheduleRouter = Router();
 

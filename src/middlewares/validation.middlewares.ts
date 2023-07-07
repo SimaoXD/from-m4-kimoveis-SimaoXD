@@ -1,34 +1,26 @@
 import * as jwt from "jsonwebtoken";
 import AppError from "../errors/AppError";
-import { TMiddleware } from "../interfaces/login.interfaces";
+import { Request, Response, NextFunction } from "express";
+import { verify } from "jsonwebtoken";
 
-const verifyTokenUser: TMiddleware<void> = async (req, res, next) => {
-  const auth = req.headers.authorization;
-
-  if (!auth) throw new AppError("Missing bearer token", 401);
-
-  const token = auth.split("")[1];
-
-  jwt.verify(token, process.env.SECRET_KEY!, (err: any, decoded: any) => {
-    if (err) throw new AppError(err.message, 401);
-
-    const path = req.baseUrl;
-    const owner = path == "/users" ? req.params.id == decoded.sub : true;
-    const admin = decoded.admin;
-
-    if (!admin && !owner) throw new AppError("Insufficient permission", 403);
-
-    res.locals.userId = decoded.sub;
-    res.locals.admin = decoded.admin;
+const verifyTokenUser = (req: Request, res: Response, next: NextFunction): Response | void => {
+  let token = req.headers.authorization;
+  if (!token) {
+    throw new AppError("Missing bearer token", 401);
+  }
+  token = token.split(" ")[1];
+  verify(token, process.env.SECRET_KEY!, (error, decoded: any) => {
+    if (error) {
+      throw new AppError(error.message, 401);
+    }
+    res.locals = { ...res.locals, decoded };
   });
   return next();
 };
 
-const verifyUserAdmin: TMiddleware<void> = async (req, res, next) => {
-  const admin = res.locals.admin;
-
+const verifyUserAdmin = (req: Request, res: Response, next: NextFunction): void => {
+  const admin: boolean = res.locals.decoded.admin;
   if (!admin) throw new AppError("Insufficient permission", 403);
-
   return next();
 };
 

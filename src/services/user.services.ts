@@ -5,29 +5,11 @@ import { TService, IUserPublic, IUserRegister, IUserPrivate } from "../interface
 import { userDataPublicSchema, userListPublicSchema } from "../schemas";
 import { AppDataSource } from "../data-source";
 
-// const requestCreateUser: TService<IUserPublic, IUserRegister> = async (payload) => {
-//   const { password } = payload;
-//   const passHash = crypt.hashSync(password, 12);
-//   const dataUser = { ...payload, password: passHash };
-
-//   const userRepo: Repository<User> = AppDataSource.getRepository(User);
-//   const user = userRepo.create(dataUser);
-
-//   console.log(dataUser);
-//   await userRepo.save(user);
-
-//   return userDataPublicSchema.parse(user);
-// };
-
 const requestCreateUser = async (payload: IUserRegister): Promise<IUserPublic> => {
   const userRepository: Repository<User> = AppDataSource.getRepository(User);
-
   const user: User = userRepository.create({ ...payload });
-
   const save = await userRepository.save(user);
-
   const userResponse: IUserPublic = userDataPublicSchema.parse(user);
-  console.log(userDataPublicSchema.parse(user));
 
   return userResponse;
 };
@@ -55,3 +37,8 @@ const requestDeleteUser: TService<void, number> = async (payload) => {
 };
 
 export { requestCreateUser, requestReadUsersList, requestUpdateUser, requestDeleteUser };
+
+// const requestDeleteUser = async (userId: number): Promise<void> => {
+//   const userRepo: Repository<User> = AppDataSource.getRepository(User);
+//   await userRepo.createQueryBuilder("user").softDelete().where("id = :id", { id: userId }).execute();
+// };
