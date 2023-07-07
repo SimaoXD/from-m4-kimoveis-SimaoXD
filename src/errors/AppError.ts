@@ -1,25 +1,26 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
-
 class AppError extends Error {
   statusCode: number;
-  data?: any;
-
-  constructor(message: string, status: number, data?: any) {
+  constructor(message: string, statusCode: number = 400) {
     super(message);
-    this.statusCode = status;
-    this.data = data;
+    this.statusCode = statusCode;
   }
 }
-
-export const handleError = (error: any, req: Request, res: Response, next: NextFunction) => {
-  if (error instanceof AppError) {
-    res.status(error.statusCode).json({ message: error.message, data: error.data });
-  } else if (error instanceof ZodError) {
-    res.status(400).json({ message: "Validation error", errors: error.flatten().fieldErrors });
-  } else {
-    next(error);
+export const handleErros = (err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
+      message: err.message,
+    });
   }
+  if (err instanceof ZodError) {
+    return res.status(400).json({
+      message: err.flatten().fieldErrors,
+    });
+  }
+  console.log(err);
+  return res.status(500).json({
+    message: "Internal server error",
+  });
 };
-
 export default AppError;

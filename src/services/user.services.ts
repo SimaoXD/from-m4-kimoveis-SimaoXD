@@ -7,7 +7,7 @@ import { AppDataSource } from "../data-source";
 
 const requestCreateUser: TService<IUserPublic, IUserRegister> = async (payload) => {
   const { password } = payload;
-  const passHash = crypt.hashSync(password!, 12);
+  const passHash = crypt.hashSync(password, 12);
   const dataUser = { ...payload, password: passHash };
 
   const userRepo: Repository<User> = AppDataSource.getRepository(User);
@@ -25,7 +25,20 @@ const requestCreateUser: TService<IUserPublic, IUserRegister> = async (payload) 
 
 //   await userRepository.save(user);
 
-//   const userResponse: IUserRegister = userDataPublicSchema.parse(user);
+//   const userResponse: IUserPublic = userDataPublicSchema.parse(user);
+
+//   return userResponse;
+// };
+
+// const requestCreateUser = async (payload: IUserRegister): Promise<IUserPublic> => {
+//   const userRepository: Repository<User> = AppDataSource.getRepository(User);
+
+//   const user: User = userRepository.create({ ...payload });
+
+//   const save = await userRepository.save(user);
+
+//   const userResponse: IUserPublic = userDataPublicSchema.parse(user);
+//   console.log(user);
 
 //   return userResponse;
 // };
